@@ -1,14 +1,14 @@
 import { useState } from 'react'
 
 import './App.css'
-import Movies from './components/Movies'
+import Flixfinder from './components/Flixfinder'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <Movies/>
+      <Flixfinder/>
     </>
   )
 }
