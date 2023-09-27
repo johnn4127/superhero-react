@@ -1,38 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; //imports the React package, I'm able to use the useState hook and the useEffect hook
 
-const Flixfinder = () => {
-  const [searchNewFilm, setSearchNewFilm] = useState(""); 
-  const [movies, setMovies] = useState([]);
+const Flixfinder = () => { //arrow function FlixFinder
+  const [searchNewFilm, setSearchNewFilm] = useState(""); //this is for my search bar when finding a new media keyword. Uses useState hook to allow setSearchNewFilm to update searchNewFilm's data. 
+  //useState sets a variable and has a function that can update that variable
+  const [movies, setMovies] = useState([]); //Using the useState hook. Setting the useState as a empty string. Sets movies and lets setMovies update the movie/data
   const [selectedFilm, setSelectedFilm] = useState(null);
 
-  const filmInfo = async (query) => {
-    let response = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=4ec9a711`);
-    let data = await response.json();
-    setMovies(data.Search || []); 
+  const filmInfo = async (query) => { //arrow function filmInfo, async is for async functions. Async will return a new promise(either completion or failure of the async operation. Promise will return the resulting value) which will be completed with the value returned by the async function or rejected. Query is a parameter(placeholder varaible)
+    let response = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=4ec9a711`); //response is a variable that awaits the fetch api data, query is the value in the input box which is defined by what the user types and will be stored. The fetch function is taking that as its parameter.
+    let data = await response.json(); //a function that reads the response like fetch and interprets it as json data, making it into usable js object then stores it into the object variable
+    setMovies(data.Search || []);  //setMovies is changing movies to equal data.search and putting it into a new array. The data is pulling from Search array.
+  
   };
 
-  const filmDetailedInfo = async (imdbID) => {
+  const filmDetailedInfo = async (imdbID) => { //filmDetailedInfo arrow function. Asynchronous function. imdbID is a parameter
     let response = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=4ec9a711`);
-    let data = await response.json();
-    setSelectedFilm(data);
-    console.log(data)
+    //response is a variable that awaits the fetch api data. imdbID is 
+    let data = await response.json(); //data is being updated to a json format
+    setSelectedFilm(data); //setSelectedFilm(the function that can update the varaible) is changing SelectedFilm to equal data. Uses useState hook
+    console.log(data) //trying to see what's in the array to decide what data to grab
   };
 
   
-  const resetSelectedFilm = () => {
-    setSelectedFilm(null);
-  };
+  // const resetSelectedFilm = () => {
+  //   setSelectedFilm(null);
+  // }; //did not use
   
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) => { //29-31 handleInputChange arrow function. setSearchNewFilm will update the searchNewFilm variable to whatever the user inputs.
     setSearchNewFilm(e.target.value); 
   };
 
-  const handleSearch = () => {
+  const handleSearch = () => { //33-35 handleSearch is an arrow function. Once handleSearch is clicked/submitted then filmInfo function will fetch the api and update the searchNewFilm to whatever the user had input. searchNewFilm is being updated by the handleInputChange function.
     filmInfo(searchNewFilm); 
   };
   
   
-  // Mortal Kombat related media will pop up on website initialization
+  //  38-40 Mortal Kombat related media will pop up on website initialization. filmInfo will fetch the api with the parameter Mortal Kombat as the data shown.
   useEffect(()=> {
     filmInfo('Mortal Kombat')
   }, []);
@@ -40,6 +43,7 @@ const Flixfinder = () => {
   return (
     <div className='mainContainer'>
       <div className="titleSearch">
+        {/* FlixFinder title and  */}
         <a href='' className='title'> <h1> FlixFinder <img className='logo' src="https://media2.giphy.com/media/2eKfq00HWfb91flICf/giphy.gif" alt="" /> </h1></a>
       </div>
       <div className='searchBar'>
@@ -69,6 +73,7 @@ const Flixfinder = () => {
                     <div className='info-container'>
                       {selectedFilm && selectedFilm.imdbID === movie.imdbID && (
                         <div className='description'>
+                          {/* selectedFilm is pulling all of the selected data like Year,Genre,Actors,etc.This is grabbing from the imdbID and going deeper into the array */}
                           <p>Year: {selectedFilm.Year}</p>
                           <p className='plot-description'>Plot: {selectedFilm.Plot}</p>
                           <p>Genre: {selectedFilm.Genre}</p>
@@ -87,6 +92,7 @@ const Flixfinder = () => {
         )}
       </ul>
       <div className='footer'>
+         {/* //footer */}
         <footer>
           <p> 2023 FlixFinder. All Rights Reserved to John Nguyen</p>
         </footer>
