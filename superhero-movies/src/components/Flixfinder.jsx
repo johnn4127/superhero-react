@@ -4,7 +4,7 @@ const Flixfinder = () => { //arrow function FlixFinder
   const [searchNewFilm, setSearchNewFilm] = useState(""); //this is for my search bar when finding a new media keyword. Uses useState hook to allow setSearchNewFilm to update searchNewFilm's data. 
   //useState sets a variable and has a function that can update that variable
   const [movies, setMovies] = useState([]); //Using the useState hook. Setting the useState as a empty string. Sets movies and lets setMovies update the movie/data
-  const [selectedFilm, setSelectedFilm] = useState(null);
+  const [selectedFilm, setSelectedFilm] = useState(null); //setSelectedFilm will use the useState hook that will update the selectedFilm variable. It's currently at null but when the selectedFilm is updated then it'll update the keyword.
 
   const filmInfo = async (query) => { //arrow function filmInfo, async is for async functions. Async will return a new promise(either completion or failure of the async operation. Promise will return the resulting value) which will be completed with the value returned by the async function or rejected. Query is a parameter(placeholder varaible)
     let response = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=4ec9a711`); //response is a variable that awaits the fetch api data, query is the value in the input box which is defined by what the user types and will be stored. The fetch function is taking that as its parameter.
@@ -43,34 +43,41 @@ const Flixfinder = () => { //arrow function FlixFinder
   return (
     <div className='mainContainer'>
       <div className="titleSearch">
-        {/* FlixFinder title and  */}
+        {/* FlixFinder title and  adds gif to the title using img link*/}
         <a href='' className='title'> <h1> FlixFinder <img className='logo' src="https://media2.giphy.com/media/2eKfq00HWfb91flICf/giphy.gif" alt="" /> </h1></a>
       </div>
       <div className='searchBar'>
-        <input className='inputSearch' type="text" maxLength={50} placeholder="" value={searchNewFilm} onChange={handleInputChange} /> 
+        {/* Creates an input field where the user will be able type in their own input. Whatever input that the user puts into the field then onChange(onChange is whenever anything changes within the field) event listener will run the handleInputChange function which will update the searchNewFilm variable */}
+        <input className='inputSearch' type="text" maxLength={50} value={searchNewFilm} onChange={handleInputChange} /> 
+        {/* Search button with onClick event listener. handleSearch will now use the filmInfo function to fetch new api data*/}
         <button className='searchButton' onClick={handleSearch}>Search</button>
       </div>
       <ul className='flix-list'>
-        {movies.length === 0 ? ( // Check if no movies are found
+        {movies.length === 0 ? ( // movies goes into the api data's array and looks through all of the array. If that compares to 0 then return no media found to the user
           <li className='no-media-found'>
             <p>No media found</p>
           </li>
         ) : (
-          movies.map((movie, index) => {
+          
+          movies.map((movie, index) => { // movie is an element and index is functioning as an number/id for that particular keyword. map is a callback function  on each element of the array which will then return the array that contains the results. map is iterating over the map array and applying the function.
             return (
               <li key={index} className='flix-info'>
+                {/* when you use function like map, react needs a way to efficiently update components so thats where the key propety comes into play. It is a special attribute that react uses to identify individual components in the list. It is a unique identifier for each item in the list basically */}
                 <div className='flix-container'>
                   <div className='poster-container'>
                     <img
                       className='poster-img'
-                      src={movie.Poster}
-                      alt={movie.Title}
-                      onClick={() => filmDetailedInfo(movie.imdbID)} // Make the image clickable
+                      src={movie.Poster} //going through the movie array and grabbing Poster
+                      alt={movie.Title} //going through movie array and grabbing Title. (this is not shown on the user side)
+                      onClick={() => filmDetailedInfo(movie.imdbID)} // Makes the image clickable. filmDetailedInfo is fetching the "second api"(not really second api but different parameter within api key) fetching deeper into the array movie going through imdbID
                     /> 
                   </div>
                   <div className='movie-details'>
                     <h2 className='movie-title'>{movie.Title}</h2>
                     <div className='info-container'>
+                      {/* conditional statement. selectedFilm  checks if the selectedFilm variable exists. If selectedFilm is undefined, null, an empty string, or false, this condition will evaluate to false.
+selectedFilm.imdbID === movie.imdbID: This checks if the imdbID property of the selectedFilm object is equal to the imdbID property of the movie object. This is used to determine if the detailed information should be displayed for the current movie.
+If both of these conditions are true, then the content inside the parentheses is rendered. */}
                       {selectedFilm && selectedFilm.imdbID === movie.imdbID && (
                         <div className='description'>
                           {/* selectedFilm is pulling all of the selected data like Year,Genre,Actors,etc.This is grabbing from the imdbID and going deeper into the array */}
@@ -92,7 +99,7 @@ const Flixfinder = () => { //arrow function FlixFinder
         )}
       </ul>
       <div className='footer'>
-         {/* //footer */}
+         {/* //footer at the bottom of the page*/}
         <footer>
           <p> 2023 FlixFinder. All Rights Reserved to John Nguyen</p>
         </footer>
@@ -102,3 +109,4 @@ const Flixfinder = () => { //arrow function FlixFinder
 };
 
 export default Flixfinder;
+
