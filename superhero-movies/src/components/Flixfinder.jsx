@@ -35,7 +35,7 @@ const Flixfinder = () => { //arrow function FlixFinder
   };
   
   
-  //  38-40 Mortal Kombat related media will pop up on website initialization. filmInfo will fetch the api with the parameter Mortal Kombat as the data shown.
+  //  38-40 Mortal Kombat related media will pop up on website initialization. filmInfo will fetch the api with the argument Mortal Kombat as the data shown. ()=> an anonymous function that lets another function be used with an argument.
   useEffect(()=> {
     filmInfo('Mortal Kombat')
   }, []);
@@ -62,7 +62,7 @@ const Flixfinder = () => { //arrow function FlixFinder
           movies.map((movie, index) => { // movie is an element and index is functioning as an number/id for that particular keyword. map is a callback function  on each element of the array which will then return the array that contains the results. map is iterating over the map array and applying the function.
             return (
               <li key={index} className='flix-info'>
-                {/* when you use function like map, react needs a way to efficiently update components so thats where the key propety comes into play. It is a special attribute that react uses to identify individual components in the list. It is a unique identifier for each item in the list basically */}
+                {/*Keys are a  special attribute that react uses to identify individual components in the list(easy way to update component). A unique identifier. index is now the key */}
                 <div className='flix-container'>
                   <div className='poster-container'>
                     <img
@@ -75,9 +75,9 @@ const Flixfinder = () => { //arrow function FlixFinder
                   <div className='movie-details'>
                     <h2 className='movie-title'>{movie.Title}</h2>
                     <div className='info-container'>
-                      {/* conditional statement. selectedFilm  checks if the selectedFilm variable exists. If selectedFilm is undefined, null, an empty string, or false, this condition will evaluate to false.
-selectedFilm.imdbID === movie.imdbID: This checks if the imdbID property of the selectedFilm object is equal to the imdbID property of the movie object. This is used to determine if the detailed information should be displayed for the current movie.
-If both of these conditions are true, then the content inside the parentheses is rendered. */}
+                      {/* conditional statement. selectedFilm  checks if the selectedFilm variable exists. If selectedFilm is undefined or null this condition will be false.
+                      If selectedFilm.imdbID === movie.imdbID then this is used to determine if the detailed information should be displayed for the current movie.
+                      If both are true then the content will show. */}
                       {selectedFilm && selectedFilm.imdbID === movie.imdbID && (
                         <div className='description'>
                           {/* selectedFilm is pulling all of the selected data like Year,Genre,Actors,etc.This is grabbing from the imdbID and going deeper into the array */}
