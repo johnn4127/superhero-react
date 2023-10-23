@@ -40,6 +40,7 @@ const Flixfinder = () => { //arrow function FlixFinder
     filmInfo('Mortal Kombat')
   }, []);
 
+  
   return (
     <div className='mainContainer'>
       <div className="titleSearch">
@@ -49,7 +50,7 @@ const Flixfinder = () => { //arrow function FlixFinder
       <div className='searchBar'>
         {/* Creates an input field where the user will be able type in their own input. Whatever input that the user puts into the field then onChange(onChange is whenever anything changes within the field) event listener will run the handleInputChange function which will update the searchNewFilm variable */}
         <input className='inputSearch' type="text" maxLength={50} value={searchNewFilm} onChange={handleInputChange} /> 
-        {/* Search button with onClick event listener. handleSearch will now use the filmInfo function to fetch new api data*/}
+        {/  * Search button with onClick event listener. handleSearch will now use the filmInfo function to fetch new api data*/}
         <button className='searchButton' onClick={handleSearch}>Search</button>
       </div>
       <ul className='flix-list'>
